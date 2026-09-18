@@ -42,11 +42,10 @@ export function Nav() {
       >
         <Container>
           <div className="flex h-16 items-center justify-between gap-6 md:h-20">
-            <Link href="/" className="flex items-baseline gap-2.5" aria-label={`${brand.full}, home`}>
+            <Link href="/" className="flex items-baseline" aria-label={`${brand.full}, home`}>
               <span className="font-[family-name:var(--font-display)] text-2xl uppercase leading-none tracking-[-0.01em]">
                 {brand.name}
               </span>
-              <span className="label hidden text-bone-dim sm:block">Athletics</span>
             </Link>
 
             <nav aria-label="Primary" className="hidden items-center gap-8 lg:flex">

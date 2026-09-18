@@ -16,7 +16,7 @@ export function Testimonials() {
       <Container>
         <SectionHead index="05 / Members" title="What people actually say." />
 
-        <RevealGroup className="mt-12 grid gap-x-6 gap-y-10 md:grid-cols-3" gap={0.08}>
+        <RevealGroup className="mt-8 grid gap-x-6 gap-y-8 md:grid-cols-3" gap={0.08}>
           {testimonials.map((item) => (
             <RevealItem key={item.name} as="article" className="flex h-full flex-col">
               <span aria-hidden className="font-[family-name:var(--font-display)] text-5xl leading-none text-forge-green">

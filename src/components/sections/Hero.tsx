@@ -1,74 +1,83 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import Image from "next/image";
 import { useRef } from "react";
 import { Container } from "@/components/ui/Layout";
 import { ButtonLink } from "@/components/ui/Button";
-import { Frame } from "@/components/ui/Frame";
 import { SplitText } from "@/components/motion/SplitText";
 import { EASE_OUT } from "@/lib/motion";
-import { brand, hero } from "@/data/content";
+import { hero } from "@/data/content";
+
+const VIDEO = "/hero-loop.mp4";
+const POSTER = "/hero-poster.webp";
+
+/** Masked left and bottom so the footage dissolves into the page ground. */
+const MASK =
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0.85) 58%, #000 78%), " +
+  "linear-gradient(to top, transparent 0%, #000 26%)";
 
 /**
  * Hero.
  *
- * Section 09 asks for a cinematic image, bold typography and clear CTAs;
- * section 11 supplies the composition. The photograph is full bleed and the
- * type sits on it, which is the only arrangement that reads cinematic. A
- * split layout with the image in a box next to the copy would look like a
- * product page.
+ * Section 09 asks for a cinematic image or video. It is footage now, muted and
+ * looping, which does the one thing a still cannot: show the chalk moving.
  *
- * Text legibility is not left to chance over an image whose exact contents
- * are unknown: a vertical scrim and a left-weighted horizontal one sit
- * between the photograph and the copy, so the headline holds contrast
- * against any frame that lands here.
+ * Under reduced motion the video is not mounted at all and the poster frame
+ * stands in. Autoplaying video is the clearest case there is for honouring
+ * that preference, and merely pausing one still leaves it decoded and holding
+ * memory, so it is better not to render it.
  *
- * Parallax is 14% of travel. Section 10 asks for subtle parallax and bans
- * slow transitions, so the image drifts rather than slides.
+ * Capped at 750px rather than filling the viewport. A hero that always eats
+ * the whole screen pushes the real content below the fold on every monitor.
  */
 export function Hero() {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "26%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={ref} className="relative isolate min-h-[100svh] overflow-hidden">
-      {/*
-        The photograph is masked away on the left and along the bottom, so it
-        dissolves into the page ground rather than stopping at an edge. The
-        headline then sits on black rather than on the image, which is both
-        the look asked for and the reason the copy holds contrast.
-      */}
+    <section ref={ref} className="relative isolate h-[min(750px,100svh)] overflow-hidden">
       <motion.div
         style={{
-          ...(reduced ? {} : { y: imageY }),
-          maskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0.85) 58%, #000 78%), linear-gradient(to top, transparent 0%, #000 28%)",
+          ...(reduced ? {} : { y: mediaY }),
+          maskImage: MASK,
           maskComposite: "intersect",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0.85) 58%, #000 78%), linear-gradient(to top, transparent 0%, #000 28%)",
+          WebkitMaskImage: MASK,
           WebkitMaskComposite: "source-in",
         }}
-        className="absolute inset-0 -z-20 scale-110"
+        className="absolute inset-0 -z-20 scale-105"
       >
-        <Frame
-          src="/hero.webp"
-          alt="A lifter chalking their hands under a single overhead light on the strength floor"
-          label="Hero frame"
-          aspect="h-full w-full"
-          priority
-          sizes="100vw"
-          className="h-full"
-        />
+        {reduced ? (
+          <Image src={POSTER} alt="" fill priority sizes="100vw" className="object-cover" />
+        ) : (
+          <video
+            className="size-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={POSTER}
+            aria-hidden
+          >
+            <source src={VIDEO} type="video/mp4" />
+          </video>
+        )}
+        {/* Grain, matching every photograph on the page. */}
+        <span aria-hidden className="pointer-events-none absolute inset-0 grain-layer" />
       </motion.div>
 
-      {/* Remaining scrim. Contrast insurance over the right of the frame. */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink-900 via-ink-900/45 to-ink-900/60" />
+      {/* Contrast insurance over the right of the frame. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-ink-900 via-ink-900/45 to-ink-900/60"
+      />
 
-      <Container className="relative flex min-h-[100svh] flex-col justify-end pb-32 pt-32 md:pb-28">
+      <Container className="relative flex h-full flex-col justify-end pb-14 pt-28 md:pb-16">
         <motion.div style={reduced ? undefined : { y: copyY, opacity: fade }}>
           <motion.span
             className="label block text-bone/70"
@@ -85,11 +94,11 @@ export function Hero() {
             animateOnLoad
             delay={0.18}
             gap={0.08}
-            className="mt-5 text-[clamp(3.5rem,13vw,11rem)] leading-[0.82] tracking-[-0.02em]"
+            className="mt-4 text-[clamp(2.75rem,9vw,6.5rem)] leading-[0.94] tracking-[-0.02em]"
           />
 
           <motion.p
-            className="mt-7 max-w-[42ch] text-lg text-bone/75 md:text-xl"
+            className="mt-5 max-w-[40ch] text-base text-bone/75 md:text-lg"
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.55 }}
@@ -98,7 +107,7 @@ export function Hero() {
           </motion.p>
 
           <motion.div
-            className="mt-10 flex flex-wrap items-center gap-3"
+            className="mt-7 flex flex-wrap items-center gap-3"
             initial={reduced ? false : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: EASE_OUT, delay: 0.68 }}
@@ -115,25 +124,6 @@ export function Hero() {
           </motion.div>
         </motion.div>
       </Container>
-
-      {/* Pillars, pinned to the bottom edge as a technical strip. */}
-      <motion.div
-        className="absolute inset-x-0 bottom-0 border-t border-ink-600/60 backdrop-blur-sm"
-        initial={reduced ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.85 }}
-      >
-        <Container>
-          <ul className="flex items-center gap-x-8 overflow-x-auto py-4 no-scrollbar">
-            {brand.pillars.map((pillar) => (
-              <li key={pillar} className="label shrink-0 text-bone/50">
-                {pillar}
-              </li>
-            ))}
-            <li className="label ml-auto hidden text-bone/50 md:block">Est. {brand.established}</li>
-          </ul>
-        </Container>
-      </motion.div>
     </section>
   );
 }

@@ -12,7 +12,7 @@
 
 export const brand = {
   name: "FORGE",
-  full: "FORGE Athletics",
+  full: "FORGE",
   city: "Hyderabad",
   country: "India",
   established: 2018,
@@ -22,7 +22,7 @@ export const brand = {
 };
 
 export const hero = {
-  eyebrow: "Forge Athletics / Hyderabad",
+  eyebrow: "Forge / Hyderabad",
   /** From the brief, set as three display lines. */
   headline: ["Build", "what others", "fear."],
   /** From the brief. */

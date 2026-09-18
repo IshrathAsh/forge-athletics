@@ -43,9 +43,12 @@ export function Section({
       ref={ref}
       id={id}
       className={cn(
-        spacing === "tight" && "py-16 md:py-20",
-        spacing === "base" && "py-24 md:py-32",
-        spacing === "loose" && "py-32 md:py-44",
+        // Tightened to bring sections toward a single screen. A hard
+        // max-height is not used: it would clip the schedule and the facility
+        // table rather than compress them.
+        spacing === "tight" && "py-10 md:py-12",
+        spacing === "base" && "py-14 md:py-20",
+        spacing === "loose" && "py-20 md:py-28",
         className,
       )}
     >

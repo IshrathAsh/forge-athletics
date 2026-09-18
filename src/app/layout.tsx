@@ -9,8 +9,8 @@ const SITE_URL = "https://forge-athletics.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "FORGE Athletics | Strength and performance training, Hyderabad",
-    template: "%s · FORGE Athletics",
+    default: "FORGE | Strength and performance training, Hyderabad",
+    template: "%s · FORGE",
   },
   description:
     "Premium strength and conditioning in Jubilee Hills, Hyderabad. Coached strength, conditioning and performance programmes, written and reviewed. Established 2018.",
@@ -24,15 +24,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    siteName: "FORGE Athletics",
-    title: "FORGE Athletics | Strength and performance training, Hyderabad",
+    siteName: "FORGE",
+    title: "FORGE | Strength and performance training, Hyderabad",
     description:
       "Coached strength, conditioning and performance programmes. Jubilee Hills, Hyderabad. Established 2018.",
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FORGE Athletics",
+    title: "FORGE",
     description: "Strength and performance training, Hyderabad.",
   },
   robots: { index: true, follow: true },
@@ -48,7 +48,7 @@ export const viewport: Viewport = {
 const schema = {
   "@context": "https://schema.org",
   "@type": "ExerciseGym",
-  name: "FORGE Athletics",
+  name: "FORGE",
   url: SITE_URL,
   description:
     "Premium strength and conditioning facility in Hyderabad, offering coached strength, conditioning and performance programmes.",

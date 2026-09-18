@@ -31,7 +31,7 @@ export function Coaches() {
         />
 
         <RevealGroup
-          className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4"
           gap={0.07}
         >
           {coaches.map((coach, i) => {
@@ -54,9 +54,9 @@ export function Coaches() {
                   >
                     <Frame
                       src={coach.image}
-                      alt={`${coach.name}, ${coach.role} at Forge Athletics`}
+                      alt={`${coach.name}, ${coach.role} at Forge`}
                       label={coach.name.split(" ")[0]}
-                      aspect="aspect-[3/4]"
+                      aspect="aspect-square"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       // Monochrome at rest, full colour on hover or focus.
                       // Longer than the house 220ms on purpose: a slow bloom

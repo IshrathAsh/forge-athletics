@@ -54,7 +54,7 @@ export function Schedule() {
           intro="Coached sessions are capped at twelve. Open floor is exactly that: the room, the equipment, and a coach on hand if you want one."
         />
 
-        <div className="mt-12">
+        <div className="mt-8">
           <div
             role="tablist"
             aria-label="Day of the week"
@@ -94,7 +94,7 @@ export function Schedule() {
             id={`${baseId}-panel`}
             role="tabpanel"
             aria-live="polite"
-            className="min-h-[22rem] pt-2"
+            className="min-h-[19rem] pt-1"
           >
             <AnimatePresence mode="wait" initial={false}>
               <motion.ul
@@ -108,7 +108,7 @@ export function Schedule() {
                 {entries.map((entry) => (
                   <li
                     key={`${entry.time}-${entry.name}`}
-                    className="group grid grid-cols-[auto_1fr] items-baseline gap-x-5 border-b border-ink-600 py-5 transition-colors duration-150 hover:bg-ink-800 md:grid-cols-[6rem_1fr_auto_8rem] md:gap-x-8"
+                    className="group grid grid-cols-[auto_1fr] items-baseline gap-x-5 border-b border-ink-600 py-4 transition-colors duration-150 hover:bg-ink-800 md:grid-cols-[6rem_1fr_auto_8rem] md:gap-x-8"
                   >
                     <span className="tabular font-[family-name:var(--font-display)] text-xl leading-none">
                       {entry.time}

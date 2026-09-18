@@ -1,4 +1,4 @@
-# FORGE Athletics
+# FORGE
 
 Landing page built from the brand brief in [`brief/brand-brief.png`](brief/brand-brief.png).
 
@@ -121,5 +121,5 @@ sections rather than routes. The content for them is already structured in
 **Forms.** There is no enquiry form. The CTAs open mail and phone links. Adding a
 booking form is a separate piece of work.
 
-**Fictional.** FORGE Athletics is not a real business. Addresses, numbers, coaches
+**Fictional.** FORGE is not a real business. Addresses, numbers, coaches
 and member stories are illustrative, and the footer says so.

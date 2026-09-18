@@ -16,7 +16,7 @@ import { manifesto } from "@/data/content";
  */
 export function Manifesto() {
   return (
-    <Section id="philosophy" spacing="loose" className="bg-bone text-forge-black">
+    <Section id="philosophy" spacing="base" className="bg-bone text-forge-black">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
           <div>
@@ -27,7 +27,7 @@ export function Manifesto() {
             <SplitText
               lines={manifesto.lines}
               gap={0.08}
-              className="mt-5 text-[clamp(2.75rem,8vw,7rem)] leading-[0.84] tracking-[-0.02em]"
+              className="mt-4 text-[clamp(2.5rem,6.5vw,5rem)] leading-[0.94] tracking-[-0.02em]"
             />
           </div>
 

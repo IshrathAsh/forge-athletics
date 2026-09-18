@@ -42,7 +42,7 @@ export function Facility() {
       {/* Atmosphere only. The table below carries the names and the detail,
           so captioning these would print the same strings twice. */}
       {photographed.length > 0 ? (
-        <div className="mt-12 overflow-x-auto no-scrollbar">
+        <div className="mt-8 overflow-x-auto no-scrollbar">
           <ul className="flex w-max gap-4 px-5 md:gap-6 md:px-10 lg:px-14 xl:px-20">
             {photographed.map((item) => (
               <li
@@ -54,9 +54,9 @@ export function Facility() {
                   <motion.div style={reduced ? undefined : { y: drift }} className="scale-110">
                     <Frame
                       src={item.image}
-                      alt={`${item.name} at Forge Athletics`}
+                      alt={`${item.name} at Forge`}
                       label=""
-                      aspect="aspect-[4/3]"
+                      aspect="aspect-[16/9]"
                       sizes="(max-width: 640px) 82vw, (max-width: 1024px) 60vw, 42vw"
                     />
                   </motion.div>
@@ -70,12 +70,12 @@ export function Facility() {
       <Container>
         {/* All five areas, photographed or not. A spec table rather than more
             cards, so the section does not repeat its own layout. */}
-        <RevealGroup className="mt-14 flex flex-col border-t border-ink-600" gap={0.05} as="ul">
+        <RevealGroup className="mt-10 flex flex-col border-t border-ink-600" gap={0.05} as="ul">
           {facility.map((item) => (
             <RevealItem
               key={item.name}
               as="li"
-              className="grid grid-cols-1 gap-x-8 gap-y-1 border-b border-ink-600 py-5 md:grid-cols-[16rem_1fr]"
+              className="grid grid-cols-1 gap-x-8 gap-y-1 border-b border-ink-600 py-3.5 md:grid-cols-[16rem_1fr]"
             >
               <h3 className="text-lg leading-none">{item.name}</h3>
               <p className="text-sm text-bone-muted">{item.detail}</p>
