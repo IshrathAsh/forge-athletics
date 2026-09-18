@@ -1,26 +1,199 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   FORGE Athletics. Design tokens.
+
+   Straight from the brand brief: Forge Black, Bone White, Forge Green.
+   The brief's note on the accent is the rule that matters most here:
+   "a spark, not a flood". Green marks one thing per screen and nothing else.
+   ========================================================================== */
+
+@theme {
+  /* --- Core palette, exactly as specified ------------------------------ */
+  --color-forge-black: #0b0b0b;
+  --color-bone: #f1efe7;
+  --color-forge-green: #d7ff3f;
+  --color-steel: #777777;
+
+  /* --- Working shades derived from those four ---------------------------
+     The brief gives four colours. A dark interface needs steps between
+     them for surfaces, borders and secondary text, so these are mixes of
+     the named colours rather than new hues.                              */
+  --color-ink-950: #060606; /* deepest, behind everything            */
+  --color-ink-900: #0b0b0b; /* page ground                           */
+  --color-ink-850: #111111; /* raised surface                        */
+  --color-ink-800: #161616; /* cards                                 */
+  --color-ink-700: #1f1f1f; /* hover surface                         */
+  --color-ink-600: #2a2a2a; /* borders on dark                       */
+  --color-ink-500: #3d3d3d; /* strong border                         */
+
+  --color-bone-muted: #a8a49a; /* secondary text on dark, 7.2:1     */
+  --color-bone-dim: #6f6c65; /* tertiary, large text only          */
+
+  --color-green-dim: #a8c72f; /* green that passes AA as text      */
+
+  /* --- Typography --------------------------------------------------------
+     Condensed display against a clean sans, as specified in section 06.  */
+  --font-display: var(--font-display), "Arial Narrow", sans-serif;
+  --font-body: var(--font-body), system-ui, -apple-system, sans-serif;
+
+  --text-2xs: 0.6875rem; /* 11, technical labels */
+  --text-xs: 0.75rem; /*  12 */
+  --text-sm: 0.875rem; /*  14 */
+  --text-base: 1rem; /*  16 */
+  --text-lg: 1.125rem; /*  18 */
+  --text-xl: 1.375rem; /*  22 */
+  --text-2xl: 1.75rem; /*  28 */
+  --text-3xl: 2.5rem; /*  40 */
+  --text-4xl: 3.5rem; /*  56 */
+  --text-5xl: 5rem; /*  80 */
+  --text-6xl: 7rem; /* 112, hero only */
+
+  --spacing: 0.25rem;
+
+  /* --- Motion -------------------------------------------------------------
+     Section 10 asks for fast and purposeful, and bans slow transitions.
+     Nothing here runs past 500ms, and most of it is well under.          */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 380ms;
+
+  /* --- Shape --------------------------------------------------------------
+     Near-square. Rounded corners read soft, and the brand is not soft.   */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+
+  --container-page: 96rem; /* 1536 */
+  --container-prose: 44rem;
+
+  --breakpoint-xs: 23.4375rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 90rem;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 20;
+  --z-nav: 40;
+  --z-fab: 50;
+  --z-overlay: 100;
+  --z-modal: 110;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  min-width: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background-color: var(--color-ink-900);
+}
+
+/*
+  One theme, locked. The page is dark from top to bottom, with a single
+  deliberate bone-white block for the manifesto. That inversion is a
+  composition device used once, not alternating sections.
+*/
+body {
+  background-color: var(--color-ink-900);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/*
+  Display type is condensed, heavy, tight and uppercase. This is the loudest
+  part of the identity, so the settings are aggressive on purpose: negative
+  tracking, line-height under 1, no wrap balancing that would soften the
+  ragged edge.
+*/
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+h4,
+h5,
+h6 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/*
+  Technical label. Used for section numbers and metadata, the way a spec
+  sheet is labelled. Wide tracking, small, never as a decorative eyebrow
+  above every heading.
+*/
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-bone-dim);
+}
+
+/* Counters and any figure that animates. Stops digits reflowing. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Hairline used to separate technical rows. */
+.rule {
+  border-color: var(--color-ink-600);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-forge-green);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-forge-green);
+  color: var(--color-forge-black);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hide scrollbars on the horizontal galleries without disabling scrolling. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Agent skills, vendored tooling rather than app code
+.agents/
+.claude/
+skills-lock.json
