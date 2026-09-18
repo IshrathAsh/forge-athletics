@@ -190,6 +190,21 @@ p {
   }
 }
 
+/*
+  Film grain, applied over every photograph.
+
+  The supplied images come from different sources and cameras. A single grain
+  layer at low opacity is the cheapest way to make them read as one shoot, and
+  it suits the 35mm documentary direction in section 07. Kept subtle: enough to
+  break up flat gradients, not enough to read as a filter.
+*/
+@utility grain-layer {
+  opacity: 0.11;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
 /* Hide scrollbars on the horizontal galleries without disabling scrolling. */
 @utility no-scrollbar {
   scrollbar-width: none;

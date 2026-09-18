@@ -52,7 +52,7 @@ export const programs = [
       "Written programming, reviewed fortnightly",
       "Competition prep for powerlifting",
     ],
-    image: "/program-strength.jpg",
+    image: "/program-strength.webp",
   },
   {
     n: "02",
@@ -63,7 +63,7 @@ export const programs = [
       "Sled, bike, rower and loaded carries",
       "Intervals prescribed by zone, not by feel",
     ],
-    image: "/program-conditioning.jpg",
+    image: "/program-conditioning.webp",
   },
   {
     n: "03",
@@ -74,7 +74,7 @@ export const programs = [
       "Jump and sprint profiling",
       "Return to play written with your physio",
     ],
-    image: "/program-performance.jpg",
+    image: "/program-performance.webp",
   },
 ];
 
@@ -94,7 +94,7 @@ export const coaches = [
     credential: "SSC certified, 190kg competition squat",
     philosophy:
       "Most people do not need a harder programme. They need to run an easy one properly for a year.",
-    image: "/coach-arjun.jpg",
+    image: "/coach-arjun.webp",
   },
   {
     name: "Nikhita Rao",
@@ -103,7 +103,7 @@ export const coaches = [
     credential: "MSc Sport Science, Loughborough",
     philosophy:
       "If we are not testing it, we are guessing. I would rather be corrected by a number than by an injury.",
-    image: "/coach-nikhita.jpg",
+    image: "/coach-nikhita.webp",
   },
   {
     name: "Imran Sheikh",
@@ -112,7 +112,7 @@ export const coaches = [
     credential: "Former 800m national qualifier",
     philosophy:
       "Conditioning is not punishment for eating. It is a separate quality and it deserves its own programme.",
-    image: "/coach-imran.jpg",
+    image: "/coach-imran.webp",
   },
   {
     name: "Meera Krishnan",
@@ -121,13 +121,13 @@ export const coaches = [
     credential: "National referee, Category B",
     philosophy:
       "The snatch takes two years before it feels like anything. People quit at eight months. Do not.",
-    image: "/coach-meera.jpg",
+    image: "/coach-meera.webp",
   },
 ];
 
 export const facility = [
-  { name: "Strength floor", detail: "14 racks, calibrated plates, competition bars", image: "/facility-strength.jpg" },
-  { name: "Olympic platforms", detail: "6 platforms, bumper sets, jerk blocks", image: "/facility-platforms.jpg" },
+  { name: "Strength floor", detail: "14 racks, calibrated plates, competition bars", image: "/facility-strength.webp" },
+  { name: "Olympic platforms", detail: "6 platforms, bumper sets, jerk blocks", image: "/facility-platforms.webp" },
   { name: "Conditioning", detail: "Assault bikes, ski ergs, 40m turf lane", image: "/facility-conditioning.jpg" },
   { name: "Recovery", detail: "Sauna, cold plunge, soft tissue room", image: "/facility-recovery.jpg" },
   { name: "Changing rooms", detail: "Lockers, showers, towel service", image: "/facility-changing.jpg" },

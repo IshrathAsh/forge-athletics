@@ -23,6 +23,8 @@ export function Frame({
   priority = false,
   label,
   focal,
+  imgClassName,
+  grain = true,
 }: {
   src: string;
   alt: string;
@@ -34,11 +36,23 @@ export function Frame({
   label?: string;
   /** Tailwind object-position, for cropping a shared photograph. */
   focal?: string;
+  /** Extra classes on the image itself, for filters such as grayscale. */
+  imgClassName?: string;
+  /** Turn the grain off. On everywhere by default. */
+  grain?: boolean;
 }) {
   if (hasImage(src)) {
     return (
       <div className={cn("relative overflow-hidden bg-ink-850", aspect, className)}>
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={cn("object-cover", focal)} />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={cn("object-cover", focal, imgClassName)}
+        />
+        {grain ? <span aria-hidden className="pointer-events-none absolute inset-0 z-10 grain-layer" /> : null}
       </div>
     );
   }

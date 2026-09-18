@@ -6,6 +6,7 @@ import { Container, Section, SectionHead } from "@/components/ui/Layout";
 import { Frame } from "@/components/ui/Frame";
 import { RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { EASE_OUT } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 import { coaches } from "@/data/content";
 
 /**
@@ -57,6 +58,14 @@ export function Coaches() {
                       label={coach.name.split(" ")[0]}
                       aspect="aspect-[3/4]"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      // Monochrome at rest, full colour on hover or focus.
+                      // Longer than the house 220ms on purpose: a slow bloom
+                      // of colour reads as deliberate where a fast one reads
+                      // as a glitch.
+                      imgClassName={cn(
+                        "transition-[filter] duration-500 ease-out",
+                        open ? "grayscale-0" : "grayscale",
+                      )}
                     />
                   </motion.div>
 

@@ -36,9 +36,26 @@ export function Hero() {
 
   return (
     <section ref={ref} className="relative isolate min-h-[100svh] overflow-hidden">
-      <motion.div style={reduced ? undefined : { y: imageY }} className="absolute inset-0 -z-20 scale-110">
+      {/*
+        The photograph is masked away on the left and along the bottom, so it
+        dissolves into the page ground rather than stopping at an edge. The
+        headline then sits on black rather than on the image, which is both
+        the look asked for and the reason the copy holds contrast.
+      */}
+      <motion.div
+        style={{
+          ...(reduced ? {} : { y: imageY }),
+          maskImage:
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0.85) 58%, #000 78%), linear-gradient(to top, transparent 0%, #000 28%)",
+          maskComposite: "intersect",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.25) 26%, rgba(0,0,0,0.85) 58%, #000 78%), linear-gradient(to top, transparent 0%, #000 28%)",
+          WebkitMaskComposite: "source-in",
+        }}
+        className="absolute inset-0 -z-20 scale-110"
+      >
         <Frame
-          src="/hero.jpg"
+          src="/hero.webp"
           alt="A lifter chalking their hands under a single overhead light on the strength floor"
           label="Hero frame"
           aspect="h-full w-full"
@@ -48,9 +65,8 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* Scrims. Contrast insurance, not decoration. */}
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink-900 via-ink-900/55 to-ink-900/70" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-ink-900/90 via-ink-900/40 to-transparent" />
+      {/* Remaining scrim. Contrast insurance over the right of the frame. */}
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-ink-900 via-ink-900/45 to-ink-900/60" />
 
       <Container className="relative flex min-h-[100svh] flex-col justify-end pb-32 pt-32 md:pb-28">
         <motion.div style={reduced ? undefined : { y: copyY, opacity: fade }}>

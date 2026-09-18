@@ -4,23 +4,30 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { useRef } from "react";
 import { Container, Section, SectionHead } from "@/components/ui/Layout";
 import { Frame } from "@/components/ui/Frame";
+import { RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import { facility } from "@/data/content";
+import { hasImage } from "@/lib/images";
 
 /**
- * Facility gallery. Section 09 asks for a horizontal scroll with parallax.
+ * Facility.
  *
- * This is a native scroll container, not a scroll hijack. A pinned section
- * that converts vertical wheel input into horizontal movement traps the
- * page, breaks the scrollbar, and is hostile on a trackpad. A real
- * overflow-x strip supports wheel, trackpad, touch, drag and the keyboard
- * for free, and the parallax comes from each frame drifting inside its own
- * fixed window as the section passes.
+ * This was a five-card horizontal strip. Two of the five areas were
+ * photographed, and a strip where three cards are placeholders reads as
+ * broken rather than as pending. So the photographed areas carry the section
+ * as a large pair, and all five are listed beneath as a spec table.
+ *
+ * If the remaining three are shot later, `photographed` picks them up
+ * automatically and the pair becomes a strip again with no code change.
+ *
+ * Parallax is 6% inside a fixed window. Section 10 asks for subtle.
  */
 export function Facility() {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const drift = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const drift = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
+
+  const photographed = facility.filter((item) => hasImage(item.image));
 
   return (
     <Section id="facility" ref={ref} spacing="base" className="overflow-hidden">
@@ -32,33 +39,50 @@ export function Facility() {
         />
       </Container>
 
-      {/* Full bleed from the left gutter so the strip runs off the edge,
-          which is what signals that it scrolls. */}
-      <div className="mt-12 overflow-x-auto no-scrollbar">
-        <ul className="flex w-max gap-4 px-5 md:gap-6 md:px-10 lg:px-14 xl:px-20">
+      {/* Atmosphere only. The table below carries the names and the detail,
+          so captioning these would print the same strings twice. */}
+      {photographed.length > 0 ? (
+        <div className="mt-12 overflow-x-auto no-scrollbar">
+          <ul className="flex w-max gap-4 px-5 md:gap-6 md:px-10 lg:px-14 xl:px-20">
+            {photographed.map((item) => (
+              <li
+                key={item.name}
+                className="w-[82vw] shrink-0 sm:w-[60vw] lg:w-[44vw] xl:w-[38vw]"
+                aria-hidden
+              >
+                <div className="overflow-hidden">
+                  <motion.div style={reduced ? undefined : { y: drift }} className="scale-110">
+                    <Frame
+                      src={item.image}
+                      alt={`${item.name} at Forge Athletics`}
+                      label=""
+                      aspect="aspect-[4/3]"
+                      sizes="(max-width: 640px) 82vw, (max-width: 1024px) 60vw, 42vw"
+                    />
+                  </motion.div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      <Container>
+        {/* All five areas, photographed or not. A spec table rather than more
+            cards, so the section does not repeat its own layout. */}
+        <RevealGroup className="mt-14 flex flex-col border-t border-ink-600" gap={0.05} as="ul">
           {facility.map((item) => (
-            <li key={item.name} className="w-[78vw] shrink-0 sm:w-[46vw] lg:w-[32vw] xl:w-[26vw]">
-              <div className="overflow-hidden">
-                <motion.div style={reduced ? undefined : { y: drift }} className="scale-110">
-                  <Frame
-                    src={item.image}
-                    alt={`${item.name} at Forge Athletics`}
-                    label=""
-                    aspect="aspect-[4/5]"
-                    sizes="(max-width: 640px) 78vw, (max-width: 1024px) 46vw, 30vw"
-                  />
-                </motion.div>
-              </div>
-
-              <div className="mt-4 flex items-baseline justify-between gap-4 border-t border-ink-600 pt-3">
-                <h3 className="text-lg leading-none">{item.name}</h3>
-              </div>
-              <p className="mt-1.5 text-sm text-bone-muted">{item.detail}</p>
-            </li>
+            <RevealItem
+              key={item.name}
+              as="li"
+              className="grid grid-cols-1 gap-x-8 gap-y-1 border-b border-ink-600 py-5 md:grid-cols-[16rem_1fr]"
+            >
+              <h3 className="text-lg leading-none">{item.name}</h3>
+              <p className="text-sm text-bone-muted">{item.detail}</p>
+            </RevealItem>
           ))}
-        </ul>
-      </div>
-
+        </RevealGroup>
+      </Container>
     </Section>
   );
 }

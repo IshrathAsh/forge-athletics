@@ -44,3 +44,6 @@ next-env.d.ts
 .agents/
 .claude/
 skills-lock.json
+
+# Original supplied images. Archived, not deployed.
+source-images/
