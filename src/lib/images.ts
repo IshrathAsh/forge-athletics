@@ -12,7 +12,7 @@ export const AVAILABLE_IMAGES = new Set<string>([
   "/hero.webp",
 
   "/program-strength.webp",
-  "/program-conditioning.webp",
+  // "/program-conditioning.webp",  watermarked Unsplash+ preview, needs replacing
   "/program-performance.webp",
 
   "/coach-arjun.webp",
